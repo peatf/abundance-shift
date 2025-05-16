@@ -1,0 +1,54 @@
+{
+  "name": "abundance-shift",
+  "version": "1.0.0",
+  "description": "Abundance GPS React Component Library",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^@src/(.*)$": "<rootDir>/src/$1"
+    }
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.1",
+    "@babel/plugin-transform-runtime": "^7.22.1",
+    "@babel/preset-env": "^7.22.1",
+    "@babel/preset-react": "^7.22.5",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^25.0.8",
+    "@rollup/plugin-node-resolve": "^15.3.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.5.1",
+    "babel-jest": "^29.6.1",
+    "jest": "^29.6.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "rollup": "^3.29.5",
+    "rollup-plugin-peer-deps-external": "^2.2.4"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "library"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "zustand": "^5.0.4"
+  }
+}
