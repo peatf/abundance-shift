@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useAbundanceStore } from '../../store/abundanceStore';
 import Button from '../common/Button';
-import { useWebAudioTones } from '../../hooks/useWebAudio'; // For chimes
+import { useWebAudioTones } from '../../hooks/useWebAudioTones'; // For chimes
 import { useSpeechSynthesis } from '../../hooks/useSpeechSynthesis'; // To be created for statement
 
 function CommitAnchor({ onComplete, onBack }) {

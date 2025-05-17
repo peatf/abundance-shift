@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useAbundanceStore } from '../../store/abundanceStore.js';
-import { useWebAudioTones } from '../../hooks/useWebAudio';
+import { useWebAudioTones } from '../../hooks/useWebAudioTones';
 import Button from '../common/Button';
 
 const NUM_CIRCLES = 4;

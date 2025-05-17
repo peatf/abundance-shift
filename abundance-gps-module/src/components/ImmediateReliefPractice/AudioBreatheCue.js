@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useAbundanceStore } from '../../store/abundanceStore';
-import { useWebAudioTones } from '../../hooks/useWebAudio.js';
+import { useWebAudioTones } from '../../hooks/useWebAudioTones';
 import { useSpeechSynthesis } from '../../hooks/useSpeechSynthesis';
 import Button from '../common/Button';
 
