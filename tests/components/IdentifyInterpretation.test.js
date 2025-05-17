@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import IdentifyInterpretation from '@src/components/IdentifyInterpretation';
+import IdentifyInterpretation from '@src/components/PerceptionWorkshop/IdentifyInterpretation';
 import { useAbundanceStore } from '@src/store/abundanceStore';
 
 // Mock the Zustand store

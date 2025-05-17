@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import OpennessPrimer from '@src/components/OpennessPrimer';
 import { useAbundanceStore, opennessPrimerSubStages } from '@src/store/abundanceStore';
+import PatternAlignmentPuzzle from '@src/components/OpennessPrimer/PatternAlignmentPuzzle';
 
 // Mock the Zustand store
 const mockSucceedOpennessPrimer = jest.fn();
@@ -15,7 +16,7 @@ jest.mock('@src/store/abundanceStore', () => ({
 }));
 
 // Mock sub-stage components
-jest.mock('@src/components/PatternAlignmentPuzzle', () => ({ onSuccess, onFailure }) => (
+jest.mock('@src/components/OpennessPrimer/PatternAlignmentPuzzle', () => ({ onSuccess, onFailure }) => (
   <div data-testid="pattern-puzzle">
     PatternAlignmentPuzzle
     <button onClick={onSuccess}>Success</button>

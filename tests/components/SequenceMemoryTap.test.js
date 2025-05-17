@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import SequenceMemoryTap from '@src/components/SequenceMemoryTap';
+import SequenceMemoryTap from '@src/components/OpennessPrimer/SequenceMemoryTap';
 import useWebAudioTones from '@src/hooks/useWebAudioTones';
 
 // Mock the useWebAudioTones hook

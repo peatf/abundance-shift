@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import PatternAlignmentPuzzle from '@src/components/PatternAlignmentPuzzle';
+import PatternAlignmentPuzzle from '@src/components/OpennessPrimer/PatternAlignmentPuzzle';
 
 describe('PatternAlignmentPuzzle Component', () => {
   const mockOnSuccess = jest.fn();

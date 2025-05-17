@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ImmediateReliefPracticeMenu from '@src/components/ImmediateReliefPracticeMenu';
+import ImmediateReliefPracticeMenu from '@src/components/ImmediateReliefPractice/ImmediateReliefPracticeMenu';
 import { useAbundanceStore } from '@src/store/abundanceStore';
 
 // Mock store

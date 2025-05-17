@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import PatternMicroPuzzleRelief from '@src/components/PatternMicroPuzzleRelief';
+import PatternMicroPuzzleRelief from '@src/components/ImmediateReliefPractice/PatternMicroPuzzleRelief';
 import { useAbundanceStore } from '@src/store/abundanceStore';
 
 jest.mock('@src/store/abundanceStore');

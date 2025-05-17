@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import AudioBreatheCue from '@src/components/AudioBreatheCue';
+import AudioBreatheCue from '@src/components/ImmediateReliefPractice/AudioBreatheCue';
 import { useAbundanceStore } from '@src/store/abundanceStore';
 import useWebAudioTones from '@src/hooks/useWebAudioTones';
 import useSpeechSynthesis from '@src/hooks/useSpeechSynthesis';

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useAbundanceStore } from '../../store/abundanceStore.js';
 import { generatePatternAlignmentPuzzle } from '../../utils/shapeUtils';
-import Button from '../common/Button';
 
 /**
  * @typedef {object} PatternAlignmentPuzzleProps
@@ -106,14 +105,14 @@ function PatternAlignmentPuzzle({ onSuccess, onFailure }) {
             <button
               key={candidate.id}
               onClick={() => handleCandidateClick(candidate)}
-              disabled={!!feedback}
+              disabled={feedback}
               aria-label={`Select ${candidate.name}`}
               className={`p-2 border-2 rounded-md hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400
-                ${selectedCandidate?.id === candidate.id ? 
+                ${feedback ? 
                   (feedback === 'correct' ? 'border-green-500 bg-green-100 dark:bg-green-900' : 
                    feedback === 'incorrect' ? 'border-red-500 bg-red-100 dark:bg-red-900' : 'border-blue-500') 
                   : 'border-gray-300 dark:border-slate-600 bg-white dark:bg-slate-800'}
-                ${!!feedback ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                ${feedback ? 'cursor-not-allowed' : 'cursor-pointer'}`}
             >
               <candidate.component className="w-10 h-10 md:w-12 md:h-12 fill-current text-gray-700 dark:text-gray-200" />
             </button>

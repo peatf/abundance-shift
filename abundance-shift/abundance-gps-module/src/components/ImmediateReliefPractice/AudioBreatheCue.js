@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useAbundanceStore } from '../../store/abundanceStore';
-import { useWebAudioTones } from '../../hooks/useWebAudio.js';
+import { useWebAudioTones } from '../../hooks/useWebAudioTones';
 import { useSpeechSynthesis } from '../../hooks/useSpeechSynthesis';
 import Button from '../common/Button';
 
 const TOTAL_DURATION_S = 90; // 90 seconds
-const CYCLE_INHALE_S = 3;  // Fixed variable naming to avoid conflicts
+const CYCLE_inhale_S = 3;
 const CYCLE_hold_S = 3; // Requirement: 3s inhale/hold/exhale/rest
 const CYCLE_exhale_S = 3;
 const CYCLE_rest_S = 3;
-const FULL_CYCLE_S = CYCLE_INHALE_S + CYCLE_hold_S + CYCLE_exhale_S + CYCLE_rest_S; // 12 seconds per cycle
+const FULL_CYCLE_S = CYCLE_inhale_S + CYCLE_hold_S + CYCLE_exhale_S + CYCLE_rest_S; // 12 seconds per cycle
 
 function AudioBreatheCue() {
   const { completeImmediateReliefExercise, returnToReliefMenu, showToast } = useAbundanceStore();
@@ -46,7 +46,7 @@ function AudioBreatheCue() {
     setPulseState('inhaling');
     if (!isChimeOnly && speechSynthSupported) speak("Inhale");
     playChime(0);
-    await new Promise(r => cycleTimeoutRef.current = setTimeout(r, CYCLE_INHALE_S * 1000));
+    await new Promise(r => cycleTimeoutRef.current = setTimeout(r, CYCLE_inhale_S * 1000));
     if (!isActive) return; // Check if stopped during await
 
     // HOLD
@@ -181,7 +181,7 @@ function AudioBreatheCue() {
       <p className="text-3xl md:text-4xl font-semibold h-12">{prompt}</p>
 
       {!chimeAudioReady && !isChimeOnly && (
-        <p className="text-xs text-yellow-300">Attempting to initialize audio. Click &quot;Start&quot; to enable if prompted.</p>
+        <p className="text-xs text-yellow-300">Attempting to initialize audio. Click "Start" to enable if prompted.</p>
       )}
        {!speechSynthSupported && !isChimeOnly && (
         <p className="text-xs text-yellow-300">Verbal prompts may not be supported by your browser. Chimes will still play.</p>

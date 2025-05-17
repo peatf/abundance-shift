@@ -1,25 +1,25 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ActivePerceptionReframingWorkshop from '../../../src/components/PerceptionWorkshop/ActivePerceptionReframingWorkshop';
-import { useAbundanceStore } from '../../../src/store/abundanceStore';
+import ActivePerceptionReframingWorkshop from '@src/components/PerceptionWorkshop/ActivePerceptionReframingWorkshop';
+import { useAbundanceStore } from '@src/store/abundanceStore';
 
 // Mock the Zustand store
-jest.mock('../../../src/store/abundanceStore', () => ({
+jest.mock('@src/store/abundanceStore', () => ({
   useAbundanceStore: jest.fn()
 }));
 
 // Mock the child components
-jest.mock('../../../src/components/PerceptionWorkshop/IdentifyInterpretation', 
+jest.mock('@src/components/PerceptionWorkshop/IdentifyInterpretation', 
   () => () => <div data-testid="identify-interpretation">IdentifyInterpretation</div>
 );
-jest.mock('../../../src/components/PerceptionWorkshop/EvidenceInventory', 
+jest.mock('@src/components/PerceptionWorkshop/EvidenceInventory', 
   () => () => <div data-testid="evidence-inventory">EvidenceInventory</div>
 );
-jest.mock('../../../src/components/PerceptionWorkshop/AlternativeFrameGeneration', 
+jest.mock('@src/components/PerceptionWorkshop/AlternativeFrameGeneration', 
   () => () => <div data-testid="alternative-frame-generation">AlternativeFrameGeneration</div>
 );
-jest.mock('../../../src/components/PerceptionWorkshop/CommitAnchor', 
+jest.mock('@src/components/PerceptionWorkshop/CommitAnchor', 
   () => () => <div data-testid="commit-anchor">CommitAnchor</div>
 );
 

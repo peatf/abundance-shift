@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import EvidenceInventory from '@src/components/EvidenceInventory';
+import EvidenceInventory from '@src/components/PerceptionWorkshop/EvidenceInventory';
 import { useAbundanceStore } from '@src/store/abundanceStore';
 
 // Mock Zustand store

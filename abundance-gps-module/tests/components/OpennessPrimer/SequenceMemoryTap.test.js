@@ -7,7 +7,7 @@ import '@testing-library/jest-dom';
 import SequenceMemoryTap from '@src/components/OpennessPrimer/SequenceMemoryTap';
 // Removed direct import of useAbundanceStore as we are mocking it fully.
 // import { useAbundanceStore } from '@src/store/abundanceStore';
-import { useWebAudioTones } from '@src/hooks/useWebAudio';
+import { useWebAudioTones } from '@src/hooks/useWebAudioTones';
 
 // Mock the Zustand store
 const mockShowToast = jest.fn();
@@ -26,7 +26,7 @@ const mockPlayTone = jest.fn();
 const mockResumeContext = jest.fn().mockResolvedValue(undefined);
 const mockInitAudio = jest.fn();
 
-jest.mock('@src/hooks/useWebAudio', () => ({
+jest.mock('@src/hooks/useWebAudioTones', () => ({
   useWebAudioTones: jest.fn(() => ({
     playTone: mockPlayTone,
     resumeContext: mockResumeContext,

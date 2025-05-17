@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useAbundanceStore } from '../../store/abundanceStore';
-import { generateReliefPuzzleSet, availableShapes } from '../../utils/shapeUtils'; // Ensure availableShapes is exported if needed for icons
+import { generateReliefPuzzleSet } from '../../utils/shapeUtils'; // Ensure availableShapes is exported if needed for icons
 import Button from '../common/Button';
 
 const GRID_SIZE = 4; // 4x4 grid

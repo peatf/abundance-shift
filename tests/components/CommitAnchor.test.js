@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import CommitAnchor from '@src/components/CommitAnchor';
+import CommitAnchor from '@src/components/PerceptionWorkshop/CommitAnchor';
 import { useAbundanceStore } from '@src/store/abundanceStore';
 
 // Mock hooks and store
