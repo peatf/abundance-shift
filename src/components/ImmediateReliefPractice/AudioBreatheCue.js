@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { useAbundanceStore } from '../../store/abundanceStore';
+import { useAbundanceStore } from '../../store/abundanceStore.js';
 import { useWebAudioTones } from '../../hooks/useWebAudio';
 import { useSpeechSynthesis } from '../../hooks/useSpeechSynthesis';
 import Button from '../common/Button';

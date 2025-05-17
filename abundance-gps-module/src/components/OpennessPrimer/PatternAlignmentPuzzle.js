@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useAbundanceStore } from '../../store/abundanceStore';
+import { useAbundanceStore } from '../../store/abundanceStore.js';
 import { generatePatternAlignmentPuzzle } from '../../utils/shapeUtils';
 import Button from '../common/Button';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAbundanceStore } from '../../store/abundanceStore';
+import { useAbundanceStore } from '../../store/abundanceStore.js';
 // import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'; // Example icons
 
 // Simple SVG Icons as fallback

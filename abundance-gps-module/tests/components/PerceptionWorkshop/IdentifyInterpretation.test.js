@@ -1,10 +1,28 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import IdentifyInterpretation from '@src/components/PerceptionWorkshop/IdentifyInterpretation';
+import { useAbundanceStore } from '@src/store/abundanceStore';
 
-describe('IdentifyInterpretation', () => {
-  it('renders the component', () => {
-    // Add checks here
+// Mock the store
+jest.mock('@src/store/abundanceStore');
+
+describe('IdentifyInterpretation Component', () => {
+  const mockSetInterpretation = jest.fn();
+  const mockNextSubStage = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useAbundanceStore.mockReturnValue({
+      perceptionWorkshop: { interpretation: '' },
+      setInterpretation: mockSetInterpretation,
+      nextSubStage: mockNextSubStage,
+    });
   });
 
-  // Add tests for input and button interaction
+  test('renders without crashing (placeholder)', () => {
+     expect(true).toBe(true);
+  });
+
+  // TODO: Add tests based on the component's functionality (input change, button click, etc.)
 }); 

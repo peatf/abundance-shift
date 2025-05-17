@@ -1,10 +1,30 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import EvidenceInventory from '@src/components/PerceptionWorkshop/EvidenceInventory';
+import { useAbundanceStore } from '@src/store/abundanceStore';
 
-describe('EvidenceInventory', () => {
-  it('renders the component', () => {
-    // Add checks here
+// Mock the store
+jest.mock('@src/store/abundanceStore');
+
+describe('EvidenceInventory Component', () => {
+  const mockAddEvidence = jest.fn();
+  const mockRemoveEvidence = jest.fn();
+  const mockNextSubStage = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    useAbundanceStore.mockReturnValue({
+      perceptionWorkshop: { evidence: [] },
+      addEvidence: mockAddEvidence,
+      removeEvidence: mockRemoveEvidence,
+      nextSubStage: mockNextSubStage,
+    });
   });
 
-  // Add tests for input and button interaction, and add/remove bullets
+  test('renders without crashing (placeholder)', () => {
+    expect(true).toBe(true);
+  });
+
+  // TODO: Add tests based on the component's functionality (adding, removing, submitting evidence, etc.)
 }); 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useAbundanceStore, opennessPrimerSubStages } from '../../store/abundanceStore';
+import { useAbundanceStore, opennessPrimerSubStages } from '../../store/abundanceStore.js';
 import PatternAlignmentPuzzle from './PatternAlignmentPuzzle';
 import SequenceMemoryTap from './SequenceMemoryTap'; // To be implemented
 

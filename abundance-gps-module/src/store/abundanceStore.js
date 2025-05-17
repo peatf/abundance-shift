@@ -21,6 +21,19 @@ export const immediateReliefSubStages = {
   AUDIO_BREATHE_RELIEF: 'AUDIO_BREATHE_RELIEF',
 };
 
+const immediateReliefPracticeSubStagesEnum = {
+  AUDIO_BREATHE_CUE: 'AUDIO_BREATHE_CUE',
+  PATTERN_MICRO_PUZZLE_RELIEF: 'PATTERN_MICRO_PUZZLE_RELIEF',
+};
+
+export const immediateReliefPracticeSubStages = immediateReliefPracticeSubStagesEnum;
+
+export const perceptionWorkshopSubStages = {
+  IDENTIFY_INTERPRETATION: 'IDENTIFY_INTERPRETATION',
+  ALTERNATIVE_FRAME_GENERATION: 'ALTERNATIVE_FRAME_GENERATION',
+  EVIDENCE_INVENTORY: 'EVIDENCE_INVENTORY',
+};
+
 const initialWorkshopState = {
   currentInterpretation: '',
   evidenceWrong: ['', ''],
@@ -39,28 +52,26 @@ const initialClarityState = {
   clarityReflectionAudioBlob: null,
 };
 
+// Define the combined initial state
+export const initialState = {
+  currentStage: stages.WILLINGNESS_CALIBRATION,
+  willingnessScore: 50, // Default to a mid-range for dev
+  opennessPrimerAttempts: 0,
+  opennessPrimerCurrentExercise: opennessPrimerSubStages.PATTERN_PUZZLE,
+  ...initialWorkshopState,
+  ...initialClarityState,
+  journal: [], // array of anchored frames: { text, userCompletion, timestamp }
+  exitMessage: '', // For premature exits
+  finalReinforcementMessage: '',
+  immediateReliefCurrentSubStage: immediateReliefSubStages.MENU,
+  toast: { message: '', type: 'info', visible: false, id: null }, // For toast notifications
+  theme: 'light',
+};
+
 export const useAbundanceStore = create(
   persist(
     (set, get) => ({
-      currentStage: stages.WILLINGNESS_CALIBRATION,
-      willingnessScore: 50, // Default to a mid-range for dev
-      opennessPrimerAttempts: 0,
-      opennessPrimerCurrentExercise: opennessPrimerSubStages.PATTERN_PUZZLE,
-
-      ...initialWorkshopState,
-      ...initialClarityState,
-
-      journal: [], // array of anchored frames: { text, userCompletion, timestamp }
-
-      exitMessage: '', // For premature exits
-      finalReinforcementMessage: '',
-
-      immediateReliefCurrentSubStage: immediateReliefSubStages.MENU,
-      
-      toast: { message: '', type: 'info', visible: false, id: null }, // For toast notifications
-
-      theme: 'light',
-      toggleTheme: () => set(state => ({ theme: state.theme === 'light' ? 'dark' : 'light' })),
+      ...initialState, // Use the defined initialState
 
       // Actions
       setWillingnessScore: (score) => {
@@ -240,8 +251,7 @@ export const useAbundanceStore = create(
           opennessPrimerCurrentExercise: opennessPrimerSubStages.PATTERN_PUZZLE,
           ...initialWorkshopState,
           ...initialClarityState,
-          // Journal is persisted, so it's not reset here.
-          // Theme is also persisted.
+          journal: [],
           exitMessage: '',
           finalReinforcementMessage: '',
           immediateReliefCurrentSubStage: immediateReliefSubStages.MENU,
@@ -249,26 +259,56 @@ export const useAbundanceStore = create(
         });
       },
       
-      clearJournal: () => set({ journal: [] }),
+      // Action to reset state specifically for testing or module restart
+      reset: () => set(initialState),
 
       showToast: (message, type = 'info', duration = 3000) => {
         const id = Date.now();
-        set({ toast: { message, type, visible: true, id } });
+        set(state => ({
+            toast: { message, type, visible: true, id }
+        }));
         setTimeout(() => {
-          // Only hide if it's still the same toast
-          if (get().toast.id === id) {
-            set(state => ({ toast: { ...state.toast, visible: false } }));
-          }
+            // Only hide if it's still the same toast
+            if (get().toast.id === id) {
+                 set(state => ({
+                     toast: { ...state.toast, visible: false }
+                 }));
+            }
         }, duration);
       },
-      hideToast: () => set(state => ({ toast: { ...state.toast, visible: false } })),
+      hideToast: () => {
+          set(state => ({
+              toast: { ...state.toast, visible: false }
+          }));
+      }
 
     }),
     {
-      name: 'abundance-gps-storage',
+      name: 'abundance-store', // unique name
+      getStorage: () => localStorage, // Use localStorage for persistence
+      // Partializing the state to exclude non-serializable parts like Blobs if needed
+      // or just exclude specific keys you don't want persisted.
+      // For now, let's persist everything that's serializable.
+      // We might want to exclude toast, for example.
       partialize: (state) => ({
-        journal: state.journal,
-        theme: state.theme,
+          currentStage: state.currentStage,
+          willingnessScore: state.willingnessScore,
+          opennessPrimerAttempts: state.opennessPrimerAttempts,
+          opennessPrimerCurrentExercise: state.opennessPrimerCurrentExercise,
+          currentInterpretation: state.currentInterpretation,
+          evidenceWrong: state.evidenceWrong,
+          evidenceServing: state.evidenceServing,
+          alternativeFrames: state.alternativeFrames,
+          anchoredFrame: state.anchoredFrame,
+          journal: state.journal,
+          exitMessage: state.exitMessage,
+          finalReinforcementMessage: state.finalReinforcementMessage,
+          immediateReliefCurrentSubStage: state.immediateReliefCurrentSubStage,
+          theme: state.theme,
+          // Note: clarityReflectionAudioBlob is intentionally not persisted
+          clarityReflectionInput: state.clarityReflectionInput, // Persist URL/text
+          clarityReflectionType: state.clarityReflectionType,
+          // Toast is transient, don't persist
       }),
     }
   )

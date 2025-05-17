@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useAbundanceStore } from '../../store/abundanceStore';
+import { useAbundanceStore } from '../../store/abundanceStore.js';
 import IdentifyInterpretation from './IdentifyInterpretation';
 import EvidenceInventory from './EvidenceInventory';
 import AlternativeFrameGeneration from './AlternativeFrameGeneration';

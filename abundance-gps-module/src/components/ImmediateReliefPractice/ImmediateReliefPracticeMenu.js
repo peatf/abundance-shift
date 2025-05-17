@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAbundanceStore } from '../../store/abundanceStore';
+import { useAbundanceStore } from '../../store/abundanceStore.js';
 
 /**
  * Stub component for the Immediate Relief Practice Menu.

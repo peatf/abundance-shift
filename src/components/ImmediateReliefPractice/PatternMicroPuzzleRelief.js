@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { useAbundanceStore } from '../../store/abundanceStore';
+import { useAbundanceStore } from '../../store/abundanceStore.js';
 import { generateReliefPuzzleSet, availableShapes } from '../../utils/shapeUtils'; // Ensure availableShapes is exported if needed for icons
 import Button from '../common/Button';
 
