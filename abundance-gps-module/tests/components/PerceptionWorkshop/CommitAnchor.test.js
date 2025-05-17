@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import CommitAnchor from '@src/components/PerceptionWorkshop/CommitAnchor';
 import { useAbundanceStore } from '@src/store/abundanceStore';
-import { useWebAudioTones } from '@src/hooks/useWebAudio';
+import { useWebAudioTones } from '@src/hooks/useWebAudioTones';
 import { useSpeechSynthesis } from '@src/hooks/useSpeechSynthesis';
 
 // Mock the hooks and store

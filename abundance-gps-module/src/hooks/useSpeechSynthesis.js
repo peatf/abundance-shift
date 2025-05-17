@@ -1,50 +1,124 @@
-import { useCallback, useState } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 
 /**
  * @typedef {object} UseSpeechSynthesisOptions
- * @property {string} [lang='en-US'] - The language of the speech.
- * @property {number} [pitch=1] - The pitch of the speech (0 to 2).
- * @property {number} [rate=1] - The speed of the speech (0.1 to 10).
- * @property {number} [volume=1] - The volume of the speech (0 to 1).
+ * @property {() => void} [onEnd] - Callback when speech ends naturally.
+ * @property {(event: SpeechSynthesisErrorEvent) => void} [onError] - Callback on speech error.
  */
 
 /**
- * Hook to use the Web Speech Synthesis API.
- * @param {UseSpeechSynthesisOptions} options
- * @returns {{ speak: (text: string, onEnd?: () => void) => void, cancel: () => void, speaking: boolean, supported: boolean }}
+ * Hook to use the browser's Speech Synthesis API.
+ * @param {UseSpeechSynthesisOptions} [options={}]
+ * @returns {{
+ *   speak: (text: string, lang?: string, voiceURI?: string, rate?: number, pitch?: number) => void,
+ *   cancel: () => void,
+ *   isSpeaking: boolean,
+ *   isSupported: boolean,
+ *   voices: SpeechSynthesisVoice[],
+ *   initSpeech: () => void // Function to explicitly initialize/load voices
+ * }}
  */
-export function useSpeechSynthesis({ lang = 'en-US', pitch = 1, rate = 1, volume = 1 } = {}) {
-  const [speaking, setSpeaking] = useState(false);
-  const supported = !!window.speechSynthesis;
+export function useSpeechSynthesis(options = {}) {
+  const { onEnd, onError } = options;
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [isSupported, setIsSupported] = useState(false);
+  const [voices, setVoices] = useState([]);
+  const synthRef = useRef(null);
+  const utteranceRef = useRef(null);
 
-  const speak = useCallback((text, onEnd) => {
-    if (!supported || !text) return;
+  const populateVoiceList = useCallback(() => {
+    if (!synthRef.current) return;
+    const availableVoices = synthRef.current.getVoices();
+    if (availableVoices.length > 0) {
+      setVoices(availableVoices);
+    }
+    // Some browsers load voices asynchronously. If they are not immediately available,
+    // the 'voiceschanged' event will fire when they are.
+  }, []);
 
+  const initSpeech = useCallback(() => {
+    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+      setIsSupported(true);
+      synthRef.current = window.speechSynthesis;
+      populateVoiceList(); // Initial attempt
+      if (synthRef.current.onvoiceschanged !== undefined) {
+        synthRef.current.onvoiceschanged = populateVoiceList;
+      }
+    } else {
+      setIsSupported(false);
+    }
+  }, [populateVoiceList]);
+  
+  useEffect(() => {
+    initSpeech(); // Initialize on mount
+
+    return () => {
+      // Cleanup: remove event listener and cancel any ongoing speech
+      if (synthRef.current) {
+        synthRef.current.onvoiceschanged = null;
+        synthRef.current.cancel(); // Cancel any speech on unmount
+      }
+    };
+  }, [initSpeech]);
+
+
+  const speak = useCallback((text, lang = 'en-US', voiceURI = null, rate = 1, pitch = 1) => {
+    if (!isSupported || !synthRef.current || !text) {
+      if (onEnd) onEnd(); // Call onEnd if not supported to unblock logic
+      return;
+    }
+
+    // Cancel any ongoing speech before starting new
+    if (synthRef.current.speaking) {
+      synthRef.current.cancel();
+      // Wait a moment for cancel to take effect, especially in some browsers
+      // This might need a more robust solution like a queue if rapid firing is an issue
+    }
+    
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang;
-    utterance.pitch = pitch;
-    utterance.rate = rate;
-    utterance.volume = volume;
+    utteranceRef.current = utterance;
 
-    utterance.onstart = () => setSpeaking(true);
+    utterance.lang = lang;
+    utterance.rate = rate;
+    utterance.pitch = pitch;
+
+    if (voiceURI) {
+      const selectedVoice = voices.find(voice => voice.voiceURI === voiceURI);
+      if (selectedVoice) {
+        utterance.voice = selectedVoice;
+      }
+    }
+
+    utterance.onstart = () => {
+      setIsSpeaking(true);
+    };
+
     utterance.onend = () => {
-      setSpeaking(false);
+      setIsSpeaking(false);
       if (onEnd) onEnd();
     };
-    utterance.onerror = (event) => {
-      console.error('SpeechSynthesisUtterance.onerror', event);
-      setSpeaking(false);
-    };
 
-    window.speechSynthesis.speak(utterance);
-  }, [supported, lang, pitch, rate, volume]);
+    utterance.onerror = (event) => {
+      setIsSpeaking(false);
+      console.error('SpeechSynthesis Error:', event);
+      if (onError) onError(event);
+      if (onEnd) onEnd(); // Also call onEnd in case of error to not block flows
+    };
+    
+    // Need to make sure synth isn't speaking from a previous quick call
+    // A small delay can sometimes help, or a more complex queueing system
+    // For this use case, immediate speaking is fine
+    synthRef.current.speak(utterance);
+
+  }, [isSupported, voices, onEnd, onError]);
 
   const cancel = useCallback(() => {
-    if (supported && window.speechSynthesis.speaking) {
-      window.speechSynthesis.cancel();
-      setSpeaking(false);
+    if (isSupported && synthRef.current && synthRef.current.speaking) {
+      synthRef.current.cancel();
     }
-  }, [supported]);
+    setIsSpeaking(false); // Manually set as onend might not fire immediately or if not speaking
+  }, [isSupported]);
 
-  return { speak, cancel, speaking, supported };
-} 
+
+  return { speak, cancel, isSpeaking, isSupported, voices, initSpeech };
+}

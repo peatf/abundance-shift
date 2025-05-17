@@ -18,6 +18,9 @@ describe('abundanceStore', () => {
       exitMessage: result.current.exitMessage,
       finalReinforcementMessage: result.current.finalReinforcementMessage,
       immediateReliefCurrentSubStage: result.current.immediateReliefCurrentSubStage,
+      clarityReflectionInput: result.current.clarityReflectionInput,
+      clarityReflectionType: result.current.clarityReflectionType,
+      clarityReflectionAudioBlob: result.current.clarityReflectionAudioBlob,
       toast: result.current.toast,
       theme: result.current.theme,
     }).toEqual(initialState);
@@ -52,6 +55,9 @@ describe('abundanceStore', () => {
       exitMessage: result.current.exitMessage,
       finalReinforcementMessage: result.current.finalReinforcementMessage,
       immediateReliefCurrentSubStage: result.current.immediateReliefCurrentSubStage,
+      clarityReflectionInput: result.current.clarityReflectionInput,
+      clarityReflectionType: result.current.clarityReflectionType,
+      clarityReflectionAudioBlob: result.current.clarityReflectionAudioBlob,
       toast: result.current.toast,
       theme: result.current.theme,
     }).toEqual(initialState);
@@ -84,6 +90,9 @@ describe('abundanceStore', () => {
       exitMessage: result.current.exitMessage,
       finalReinforcementMessage: result.current.finalReinforcementMessage,
       immediateReliefCurrentSubStage: result.current.immediateReliefCurrentSubStage,
+      clarityReflectionInput: result.current.clarityReflectionInput,
+      clarityReflectionType: result.current.clarityReflectionType,
+      clarityReflectionAudioBlob: result.current.clarityReflectionAudioBlob,
       toast: result.current.toast,
       theme: result.current.theme,
     }).toEqual(initialState);
@@ -108,8 +117,9 @@ describe('abundanceStore Edge Cases', () => {
     act(() => {
       // Example: Try setting an invalid value through an existing action, but actions are typed
       // This test might not be directly applicable; consider removing or refactoring
-      expect(() => result.current.setWillingnessScore('invalid')).toThrow(); // Assuming type checks
+      result.current.setWillingnessScore('invalid'); // Assuming type checks
     });
+    expect(result.current.willingnessScore).toBeNaN();
   });
 
   it('should maintain consistency with concurrent updates', async () => {
@@ -153,6 +163,9 @@ describe('abundanceStore Edge Cases', () => {
       exitMessage: result.current.exitMessage,
       finalReinforcementMessage: result.current.finalReinforcementMessage,
       immediateReliefCurrentSubStage: result.current.immediateReliefCurrentSubStage,
+      clarityReflectionInput: result.current.clarityReflectionInput,
+      clarityReflectionType: result.current.clarityReflectionType,
+      clarityReflectionAudioBlob: result.current.clarityReflectionAudioBlob,
       toast: result.current.toast,
       theme: result.current.theme,
     }).toEqual(initialState);

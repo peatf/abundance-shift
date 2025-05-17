@@ -75,7 +75,7 @@ export const useAbundanceStore = create(
 
       // Actions
       setWillingnessScore: (score) => {
-        set({ willingnessScore: score });
+        set({ willingnessScore: Number(score) });
         if (score < 50) {
           const exitMsg = "Openness requires curiosity. Return when you're ready, or explore our Intro Guide for foundational practices.";
           set({
